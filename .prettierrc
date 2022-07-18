@@ -1,0 +1,8 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "insertSpaces": true,
+  "trimTrailingWhitespace": true,
+  "semi": false,
+  "singleQuote": true
+}
