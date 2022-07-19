@@ -55,21 +55,7 @@
     "**/.svn": true,
     "**/.hg": true,
     "**/CVS": true,
-    "**/.DS_Store": true,
-    ".vscode/": true,
-    "tailwind.config.js": true,
-    "README.md": true,
-    ".prettierrc": true,
-    "i18n.json": true,
-    "jest.config.js": true,
-    "next-env.d.ts": true,
-    "next.config.js": true,
-    "package-lock.json": true,
-    "package.json": true,
-    "postcss.config.js": true,
-    "tsconfig.json": true,
-    "node_modules/": true,
-    ".next/": true
+    "**/.DS_Store": true
   },
-  "hidefiles.selectedProfile": "Default"
+  "hidefiles.selectedProfile": "Show All Files"
 }
