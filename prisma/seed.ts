@@ -5,9 +5,9 @@ const prisma = new PrismaClient()
 
 const sellerData2: Prisma.SellerCreateInput[] = [
   {
-    company: 'lsaa',
-    region: 'laass',
-    currency: 'lqq',
+    company: 'chickenland',
+    region: 'us',
+    currency: '$',
     menus: {
       create: [
         {
@@ -78,81 +78,34 @@ const sellerData2: Prisma.SellerCreateInput[] = [
         {
           price: 2,
           name: "pepsi"
-        }
+        },
+        { price: 2, name: "sprite" },
+        { price: 2, name: "lipton" }
       ]
     }
-    , side_dishs: {
+    , side_dishes: {
       create: [
         {
           price: 4,
           name: "chiken-nuggets"
-        }
+        },
+        { price: 4, name: "fish-fingers" }
       ]
     },
     desserts: {
       create: [
-        { price: 4, name: "waffle" }
+        { price: 4, name: "waffle" },
+        { price: 2, name: "cake" }
       ]
     },
     sauces: {
       create: [
-        { price: 2, name: "ketchup" }
+        { price: 2, name: "ketchup" },
+        { price: 2, name: "mayo" }
+
       ]
     }
   }]
-
-//   model Seller {
-//   id       Int    @id @default(autoincrement())
-//   company  String @unique
-//   region   String
-//   currency String
-//   menus    Menu[]
-// }
-//
-// // whole menu
-// model Menu {
-//   id       Int       @id @default(autoincrement())
-//   name     String
-//   price    Int
-//   seller   Seller    @relation(fields: [sellerId], references: [id])
-//   sellerId Int
-//   items    Product[]
-//   extras   Extra[]
-//   size     Size
-// }
-//
-// // One item like Buger or Fries
-// model Product {
-//   id         Int          @id @default(autoincrement())
-//   price      Int
-//   name       String
-//   Menu       Menu?        @relation(fields: [menuId], references: [id])
-//   menuId     Int?
-//   ingredient Ingredient[]
-// }
-//
-// // ingredients of products, meat pickle etc.
-// model Ingredient {
-//   id        Int     @id @default(autoincrement())
-//   name      String
-//   product   Product @relation(fields: [productId], references: [id])
-//   productId Int
-// }
-//
-// model Extra {
-//   id     Int    @id @default(autoincrement())
-//   name   String
-//   price  Int
-//   Menu   Menu?  @relation(fields: [menuId], references: [id])
-//   menuId Int?
-//   size   Size?
-// }
-//
-// enum Size {
-//   Big
-//   Medium
-//   Small
-// }
 
 async function main() {
   console.log(`Start seeding ...`)
