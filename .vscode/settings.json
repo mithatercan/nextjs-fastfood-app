@@ -36,7 +36,9 @@
         ],
         "peek": [
           "src/",
-          "yarn.lock"
+          "yarn.lock",
+          ".gitignore",
+          ".env"
         ]
       },
       {
@@ -57,8 +59,6 @@
     ".vscode/": true,
     "tailwind.config.js": true,
     "README.md": true,
-    ".env": true,
-    ".gitignore": true,
     ".prettierrc": true,
     "i18n.json": true,
     "jest.config.js": true,
