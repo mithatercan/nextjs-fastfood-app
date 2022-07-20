@@ -16,83 +16,44 @@ datasource db {
 }
 
 model Seller {
-  id          Int         @id @default(autoincrement())
-  company     String      @unique
-  region      String
-  currency    String
-  menus       Menu[]
-  drinks      Drinks[]
-  side_dishes Side_Dish[]
-  desserts    Desserts[]
-  sauces      Sauces[]
-
-}
-
-// whole menu
-model Menu {
+  username String
+  password String
+  email    String    @unique
   id       Int       @id @default(autoincrement())
-  name     String
-  price    Int
-  seller   Seller    @relation(fields: [sellerId], references: [id])
-  sellerId Int
-  items    Product[]
-  size     Size      @default(Medium)
+  company  String    @unique
+  region   String
+  currency String
+  products Product[]
 }
 
-// One item like Buger or Fries
+model Category {
+  id          Int       @id @default(autoincrement())
+  description String?
+  name        String
+  products    Product[]
+}
+
 model Product {
-  id         Int           @id @default(autoincrement())
-  price      Int
-  name       String
-  Menu       Menu?         @relation(fields: [menuId], references: [id])
-  menuId     Int?
-  ingredient Ingredients[]
-}
-
-model Sauces {
-  id       Int     @id @default(autoincrement())
-  price    Int
-  name     String
-  Seller   Seller? @relation(fields: [sellerId], references: [id])
-  sellerId Int?
-}
-
-model Desserts {
-  id          Int           @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   price       Int
   name        String
-  Seller      Seller?       @relation(fields: [sellerId], references: [id])
-  sellerId    Int?
-  ingredients Ingredients[]
-}
-
-model Drinks {
-  id       Int     @id @default(autoincrement())
-  price    Int
-  name     String
-  Seller   Seller? @relation(fields: [sellerId], references: [id])
-  sellerId Int?
-}
-
-model Side_Dish {
-  id          Int           @id @default(autoincrement())
-  price       Int
-  name        String
-  seller      Seller        @relation(fields: [sellerId], references: [id])
+  description String
+  ingredients String
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  seller      Seller   @relation(fields: [sellerId], references: [id])
   sellerId    Int
-  ingredients Ingredients[]
+  menu        Menu?    @relation(fields: [menuId], references: [id])
+  menuId      Int?
 }
 
-model Ingredients {
-  id          Int        @id @default(autoincrement())
-  price       Int?
+model Menu {
+  id          Int       @id @default(autoincrement())
+  price       Int
   name        String
-  product     Product    @relation(fields: [productId], references: [id])
-  productId   Int
-  Side_Dish   Side_Dish? @relation(fields: [side_DishId], references: [id])
-  side_DishId Int?
-  Desserts    Desserts?  @relation(fields: [dessertsId], references: [id])
-  dessertsId  Int?
+  description String
+  items       Product[]
+  size        Size      @default(Medium)
 }
 
 enum Size {
