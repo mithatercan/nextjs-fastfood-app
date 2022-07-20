@@ -1,0 +1,104 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Seller {
+  id Int [pk, increment]
+  company String [unique, not null]
+  region String [not null]
+  currency String [not null]
+  menus Menu [not null]
+  drinks Drinks [not null]
+  side_dishes Side_Dish [not null]
+  desserts Desserts [not null]
+  sauces Sauces [not null]
+}
+
+Table Menu {
+  id Int [pk, increment]
+  name String [not null]
+  price Int [not null]
+  seller Seller [not null]
+  sellerId Int [not null]
+  items Product [not null]
+  size Size [not null, default: 'Medium']
+}
+
+Table Product {
+  id Int [pk, increment]
+  price Int [not null]
+  name String [not null]
+  Menu Menu
+  menuId Int
+  ingredient Ingredients [not null]
+}
+
+Table Sauces {
+  id Int [pk, increment]
+  price Int [not null]
+  name String [not null]
+  Seller Seller
+  sellerId Int
+}
+
+Table Desserts {
+  id Int [pk, increment]
+  price Int [not null]
+  name String [not null]
+  Seller Seller
+  sellerId Int
+  ingredients Ingredients [not null]
+}
+
+Table Drinks {
+  id Int [pk, increment]
+  price Int [not null]
+  name String [not null]
+  Seller Seller
+  sellerId Int
+}
+
+Table Side_Dish {
+  id Int [pk, increment]
+  price Int [not null]
+  name String [not null]
+  seller Seller [not null]
+  sellerId Int [not null]
+  ingredients Ingredients [not null]
+}
+
+Table Ingredients {
+  id Int [pk, increment]
+  price Int
+  name String [not null]
+  product Product [not null]
+  productId Int [not null]
+  Side_Dish Side_Dish
+  side_DishId Int
+  Desserts Desserts
+  dessertsId Int
+}
+
+Enum Size {
+  Big
+  Medium
+  Small
+}
+
+Ref: Menu.sellerId > Seller.id
+
+Ref: Product.menuId > Menu.id
+
+Ref: Sauces.sellerId > Seller.id
+
+Ref: Desserts.sellerId > Seller.id
+
+Ref: Drinks.sellerId > Seller.id
+
+Ref: Side_Dish.sellerId > Seller.id
+
+Ref: Ingredients.productId > Product.id
+
+Ref: Ingredients.side_DishId > Side_Dish.id
+
+Ref: Ingredients.dessertsId > Desserts.id
