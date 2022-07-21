@@ -3,6 +3,9 @@
 //// ------------------------------------------------------
 
 Table Seller {
+  username String [not null]
+  password String [not null]
+  email String [unique, not null]
   id Int [pk, increment]
   company String [unique, not null]
   region String [not null]
@@ -12,6 +15,7 @@ Table Seller {
 
 Table Category {
   id Int [pk, increment]
+  description String
   name String [not null]
   products Product [not null]
 }
@@ -26,13 +30,27 @@ Table Product {
   categoryId Int [not null]
   seller Seller [not null]
   sellerId Int [not null]
-  combinations Product
-  productId Int [not null]
-  combinedwith Product [not null]
+  menu Menu
+  menuId Int
+}
+
+Table Menu {
+  id Int [pk, increment]
+  price Int [not null]
+  name String [not null]
+  description String [not null]
+  items Product [not null]
+  size Size [not null, default: 'Medium']
+}
+
+Enum Size {
+  Big
+  Medium
+  Small
 }
 
 Ref: Product.categoryId > Category.id
 
 Ref: Product.sellerId > Seller.id
 
-Ref: Product.productId - Product.id
+Ref: Product.menuId > Menu.id
