@@ -5,11 +5,12 @@ import cookie from 'cookie'
 import prisma from '@utils/db'
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { username, password } = req.body
+  const { email, password } = req.body
 
   const foundUser = await prisma.user.findUnique({
     where: {
-      username: username,
+      email
+
     },
   })
 
