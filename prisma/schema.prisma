@@ -15,15 +15,23 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DB_URI")
 }
 
-model Seller {
+model User {
+  password  String
+  email     String   @unique
+  id        Int      @id @default(autoincrement())
+  company   Company?
+  companyId Int
+}
+
+model Company {
   username String
   password String
-  email    String    @unique
   id       Int       @id @default(autoincrement())
-  company  String    @unique
   region   String
   currency String
   products Product[]
+  user     User      @relation(fields: [userId], references: [id])
+  userId   Int       @unique
 }
 
 model Category {
@@ -41,7 +49,7 @@ model Product {
   ingredients String
   category    Category @relation(fields: [categoryId], references: [id])
   categoryId  Int
-  seller      Seller   @relation(fields: [sellerId], references: [id])
+  company     Company  @relation(fields: [sellerId], references: [id])
   sellerId    Int
   menu        Menu?    @relation(fields: [menuId], references: [id])
   menuId      Int?

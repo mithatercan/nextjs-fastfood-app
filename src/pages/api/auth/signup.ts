@@ -4,19 +4,19 @@ import bcrypt from 'bcrypt'
 import cookie from 'cookie'
 import prisma from '@utils/db'
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const { username, password } = req.body
+export default async function(req: NextApiRequest, res: NextApiResponse) {
+  const { email, password } = req.body
 
   const foundUser = await prisma.user.findUnique({
     where: {
-      username: username,
+      email
     },
   })
 
   if (!foundUser) {
     const newUser = await prisma.user.create({
       data: {
-        username: username,
+        email,
         password: bcrypt.hashSync(password, 10),
       },
     })
