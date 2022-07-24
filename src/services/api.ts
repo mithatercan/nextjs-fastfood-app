@@ -52,4 +52,10 @@ export const api = createApi({
     }),
   }),
 });
-export const { useLoginMutation, useUseUserQuery, useSignupMutation, useLogOutMutation } = api;
+
+export const {
+  useLoginMutation,
+  useUseUserQuery,
+  useSignupMutation,
+  useLogOutMutation,
+} = api;

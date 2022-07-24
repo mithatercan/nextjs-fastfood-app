@@ -1,15 +1,15 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import jwt from 'jsonwebtoken'
+import prisma from '@utils/db'
 import bcrypt from 'bcrypt'
 import cookie from 'cookie'
-import prisma from '@utils/db'
+import jwt from 'jsonwebtoken'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function(req: NextApiRequest, res: NextApiResponse) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { email, password } = req.body
 
   const foundUser = await prisma.user.findUnique({
     where: {
-      email
+      email,
     },
   })
 

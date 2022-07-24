@@ -7,7 +7,7 @@ Table User {
   email String [unique, not null]
   id Int [pk, increment]
   company Company
-  companyId Int [not null]
+  companyId Int
 }
 
 Table Company {
