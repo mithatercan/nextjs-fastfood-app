@@ -1,27 +1,27 @@
 import { Box, Flex } from '@chakra-ui/react'
-import Logo from './Logo';
-import Form from './Form'
-import Links from './Links'
-import Footer from './Footer';
-import React, { FC } from 'react'
+import React from 'react'
 
-const Container: FC<{
-  type: 'signin' | 'signup'
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-}> = ({
+import Footer from './Footer'
+import Links from './Links'
+import Logo from './Logo'
+
+const Container = ({
   type,
-  handleSubmit,
+  children,
+}: {
+  type: 'signin' | 'signup'
+    children: JSX.Element
 }) => {
-    return (
-      <Box className="w-screen h-screen flex bg-cover bg-center bg-auth-bg" >
-        <Flex className='relative w-screen sm:w-96 gap-5 flex-col justify-center items-center bg-white px-5 shadow-lg'>
-          <Logo />
-          <Form type={type} handleSubmit={handleSubmit} />
-          <Links type={type} />
-          <Footer />
-        </Flex>
-      </Box>
-    )
-  }
+  return (
+    <Box className="w-screen h-screen flex bg-cover bg-center bg-auth-bg">
+      <Flex className="relative w-screen sm:w-96 gap-5 flex-col justify-center items-center bg-white px-5 shadow-lg">
+        <Logo />
+        {children}
+        <Links type={type} />
+        <Footer />
+      </Flex>
+    </Box>
+  )
+}
 
 export default Container

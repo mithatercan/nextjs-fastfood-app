@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import jwt from 'jsonwebtoken'
+import prisma from '@utils/db'
 import bcrypt from 'bcrypt'
 import cookie from 'cookie'
-import prisma from '@utils/db'
+import jwt from 'jsonwebtoken'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const { email, password } = req.body
@@ -29,5 +29,5 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ ...foundUser })
   }
 
-  return res.status(200).send({ msg: 'Invalid credentials!' })
+  return res.status(404).send({ msg: 'Invalid credentials!' })
 }

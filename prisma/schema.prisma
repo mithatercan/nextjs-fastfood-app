@@ -20,7 +20,7 @@ model User {
   email     String   @unique
   id        Int      @id @default(autoincrement())
   company   Company?
-  companyId Int
+  companyId Int?
 }
 
 model Company {
