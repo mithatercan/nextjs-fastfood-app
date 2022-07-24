@@ -2,15 +2,23 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
-Table Seller {
-  username String [not null]
+Table User {
   password String [not null]
   email String [unique, not null]
   id Int [pk, increment]
-  company String [unique, not null]
+  company Company
+  companyId Int [not null]
+}
+
+Table Company {
+  username String [not null]
+  password String [not null]
+  id Int [pk, increment]
   region String [not null]
   currency String [not null]
   products Product [not null]
+  user User [not null]
+  userId Int [unique, not null]
 }
 
 Table Category {
@@ -28,7 +36,7 @@ Table Product {
   ingredients String [not null]
   category Category [not null]
   categoryId Int [not null]
-  seller Seller [not null]
+  company Company [not null]
   sellerId Int [not null]
   menu Menu
   menuId Int
@@ -49,8 +57,10 @@ Enum Size {
   Small
 }
 
+Ref: Company.userId - User.id
+
 Ref: Product.categoryId > Category.id
 
-Ref: Product.sellerId > Seller.id
+Ref: Product.sellerId > Company.id
 
 Ref: Product.menuId > Menu.id

@@ -9,8 +9,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   const foundUser = await prisma.user.findUnique({
     where: {
-      email
-
+      email,
     },
   })
 
