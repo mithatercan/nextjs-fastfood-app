@@ -1,16 +1,18 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { Company } from '@prisma/client'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export type LoginRequest = {
-  password: string;
-  email: string;
-};
+  password: string
+  email: string
+}
 export type LoginResponse = {
-  password: string | null;
-  id: number;
-  email: string;
-};
-export type useUserType = LoginResponse | null;
-const baseUrl = 'http://localhost:3000/';
+  password: string | null
+  id: number
+  email: string
+  company?: Company
+}
+export type useUserType = LoginResponse | null
+const baseUrl = 'http://localhost:3000/'
 
 export const api = createApi({
   keepUnusedDataFor: process.env.NODE_ENV === 'test' ? 0 : 60,
@@ -50,12 +52,20 @@ export const api = createApi({
       }),
       providesTags: ['user'],
     }),
+    createCompany: builder.mutation({
+      query: (companyInfo) => ({
+        url: 'api/company/add-company',
+        method: 'POST',
+        body: companyInfo,
+      }),
+    }),
   }),
-});
+})
 
 export const {
   useLoginMutation,
   useUseUserQuery,
   useSignupMutation,
   useLogOutMutation,
-} = api;
+  useCreateCompanyMutation,
+} = api

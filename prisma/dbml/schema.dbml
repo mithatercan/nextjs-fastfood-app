@@ -7,16 +7,14 @@ Table User {
   email String [unique, not null]
   id Int [pk, increment]
   company Company
-  companyId Int
 }
 
 Table Company {
-  username String [not null]
-  password String [not null]
+  name String [not null]
   id Int [pk, increment]
-  region String [not null]
-  currency String [not null]
-  products Product [not null]
+  region String
+  currency String
+  categories Category
   user User [not null]
   userId Int [unique, not null]
 }
@@ -26,6 +24,8 @@ Table Category {
   description String
   name String [not null]
   products Product [not null]
+  Company Company
+  companyId Int [unique]
 }
 
 Table Product {
@@ -33,11 +33,9 @@ Table Product {
   price Int [not null]
   name String [not null]
   description String [not null]
-  ingredients String [not null]
+  ingredients String[] [not null]
   category Category [not null]
   categoryId Int [not null]
-  company Company [not null]
-  sellerId Int [not null]
   menu Menu
   menuId Int
 }
@@ -59,8 +57,8 @@ Enum Size {
 
 Ref: Company.userId - User.id
 
-Ref: Product.categoryId > Category.id
+Ref: Category.companyId - Company.id
 
-Ref: Product.sellerId > Company.id
+Ref: Product.categoryId > Category.id
 
 Ref: Product.menuId > Menu.id

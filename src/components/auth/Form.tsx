@@ -24,8 +24,8 @@ const Container = ({
   isLoading,
 }: {
   type: 'signin' | 'signup'
-    onSubmit: SubmitHandler<Inputs>
-    isLoading: boolean
+  onSubmit: SubmitHandler<Inputs>
+  isLoading: boolean
 }) => {
   const {
     register,
