@@ -7,15 +7,12 @@ Table User {
   email String [unique, not null]
   id Int [pk, increment]
   company Company
-  companyId Int
 }
 
 Table Company {
-  username String [not null]
-  password String [not null]
   id Int [pk, increment]
-  region String [not null]
-  currency String [not null]
+  region String
+  currency String
   products Product [not null]
   user User [not null]
   userId Int [unique, not null]

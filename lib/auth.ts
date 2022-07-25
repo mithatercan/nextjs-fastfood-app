@@ -1,22 +1,22 @@
-import type { Seller } from '@prisma/client'
+import type { User } from '@prisma/client'
 import jwt from 'jsonwebtoken'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import prisma from './prisma'
 
 export const validateRoute = (
-  handler: (req: NextApiRequest, res: NextApiResponse, user: Seller) => void
+  handler: (req: NextApiRequest, res: NextApiResponse, user: User) => void
 ) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const token = req.cookies.ACCESS_TOKEN
     if (token) {
-      let user: Seller | null
+      let user: User | null
       try {
         const { id } = jwt.verify(token, process.env.SECRET_KEY as string) as {
           id: number
         }
-        user = await prisma.seller.findUnique({
-          where: { id }
+        user = await prisma.user.findUnique({
+          where: { id },
         })
         if (!user) {
           throw new Error('Not real user')
