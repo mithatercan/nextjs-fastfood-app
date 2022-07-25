@@ -12,18 +12,21 @@ export const validateRoute = (
     if (token) {
       let user: User | null
       try {
-        const { id } = jwt.verify(token, process.env.SECRET_KEY as string) as {
+        const { id } = jwt.verify(token, process.env.JWT_SECRET as string) as {
           id: number
         }
         user = await prisma.user.findUnique({
           where: { id },
+          include: {
+            company: true,
+          },
         })
         if (!user) {
           throw new Error('Not real user')
         }
       } catch (e) {
         res.status(401)
-        res.json({ error: 'Not authorized' })
+        res.json({ e })
         return
       }
       //! -----------------------------------------------------------------------0
@@ -39,6 +42,6 @@ export const validateRoute = (
 export const validateToken: (token: string) => string | jwt.JwtPayload = (
   token: string
 ) => {
-  const user = jwt.verify(token, process.env.SECRET_KEY as string)
+  const user = jwt.verify(token, process.env.JWT_SECRET as string)
   return user
 }

@@ -13,9 +13,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     },
   })
 
-  if (foundUser && bcrypt.compareSync(password, foundUser?.password)) {
+  if (foundUser && bcrypt.compareSync(password, foundUser.password)) {
     const token = jwt.sign(foundUser, process.env.JWT_SECRET as string, {
-      expiresIn: '1h',
+      expiresIn: '8h',
     })
 
     res.setHeader(
@@ -23,10 +23,13 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       cookie.serialize('ACCESS_TOKEN', token, {
         httpOnly: true,
         maxAge: 8 * 60 * 60,
+        path: '/',
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
       })
     )
 
-    return res.status(200).json({ ...foundUser })
+    return res.status(200).json(foundUser)
   }
 
   return res.status(404).send({ msg: 'Invalid credentials!' })

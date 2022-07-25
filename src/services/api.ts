@@ -52,6 +52,13 @@ export const api = createApi({
       }),
       providesTags: ['user'],
     }),
+    createCompany: builder.mutation({
+      query: (companyInfo) => ({
+        url: 'api/company/add-company',
+        method: 'POST',
+        body: companyInfo,
+      }),
+    }),
   }),
 })
 
@@ -60,4 +67,5 @@ export const {
   useUseUserQuery,
   useSignupMutation,
   useLogOutMutation,
+  useCreateCompanyMutation,
 } = api

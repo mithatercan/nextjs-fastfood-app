@@ -23,6 +23,7 @@ model User {
 }
 
 model Company {
+  name       String
   id         Int       @id @default(autoincrement())
   region     String?
   currency   String?
