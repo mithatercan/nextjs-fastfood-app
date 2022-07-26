@@ -10,7 +10,11 @@ export default validateRoute(
       region,
       currency,
       name,
-    }: { region: string; currency: string; name: string } = req.body
+    }: {
+      region: string
+      currency: string
+      name: string
+    } = req.body
     try {
       const createdCompany = await prisma.company.create({
         data: {

@@ -20,7 +20,7 @@ const Signin: NextPage = () => {
     })
 
     if (result.isSuccess) {
-      router.push('/')
+      router.push('/auth/company')
     }
   }
 
