@@ -1,8 +1,6 @@
 import { Button, Checkbox, Input, Stack, Text } from '@chakra-ui/react'
 import AuthContainer from '@components/auth/Container'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 
 import { useCreateCompanyMutation, useUseUserQuery } from '../../services/api'
@@ -14,21 +12,17 @@ type TCompany = {
 }
 
 const UserPage = () => {
-  const [createCompany, result] = useCreateCompanyMutation()
+  const [createCompany] = useCreateCompanyMutation()
   const { data: user } = useUseUserQuery()
   const router = useRouter()
-
+  if (user?.company) {
+    router.push('/menu')
+  }
   const { register, handleSubmit } = useForm<TCompany>()
 
   const onSubmit = (data: TCompany) => {
     createCompany({ ...data })
   }
-
-  useEffect(() => {
-    if (user?.company) {
-      router.push('/menu')
-    }
-  }, [user?.company])
 
   return (
     <AuthContainer type="company">
