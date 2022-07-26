@@ -16,6 +16,12 @@ const UserPage = () => {
   const [createCompany] = useCreateCompanyMutation()
   const { data: user } = useUseUserQuery()
   const router = useRouter()
+<<<<<<< HEAD
+=======
+  if (user?.company) {
+    router.push('/menu')
+  }
+>>>>>>> 5c9eb109004783eed16e4abeaca20c489afd38c6
   const { register, handleSubmit } = useForm<TCompany>()
 
   const onSubmit = (data: TCompany) => {
@@ -26,6 +32,7 @@ const UserPage = () => {
     }
   }
 
+<<<<<<< HEAD
   if (user && user.company) {
     router.push('/app/menu')
   }
@@ -33,6 +40,9 @@ const UserPage = () => {
   return !user ? (
     'Loading...'
   ) : (
+=======
+  return (
+>>>>>>> 5c9eb109004783eed16e4abeaca20c489afd38c6
     <AuthContainer type="company">
       <form className="w-[90%]" onSubmit={handleSubmit(onSubmit)}>
         <Stack className="mt-5" spacing={7}>

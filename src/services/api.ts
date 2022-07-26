@@ -58,6 +58,7 @@ export const api = createApi({
         method: 'POST',
         body: companyInfo,
       }),
+      invalidatesTags: ['user'],
     }),
   }),
 })
