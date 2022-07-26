@@ -1,6 +1,6 @@
 import AuthContainer from '@components/auth/Container'
 import Form from '@components/auth/Form'
-import { useLoginMutation } from '@services/api'
+import { useLoginMutation, useUseUserQuery } from '@services/api'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
@@ -11,17 +11,17 @@ type Data = {
 }
 
 const Signin: NextPage = () => {
-  const [login, result] = useLoginMutation()
   const router = useRouter()
 
+  const { data: user } = useUseUserQuery()
+  if (user?.id) {
+    router.push('/auth/company')
+  }
+  const [login, result] = useLoginMutation()
   const handleSubmit = (data: Data) => {
     login({
       ...data,
     })
-
-    if (result.isSuccess) {
-      router.push('/auth/company')
-    }
   }
 
   return (

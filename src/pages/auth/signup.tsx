@@ -1,6 +1,6 @@
 import AuthContainer from '@components/auth/Container'
 import Form from '@components/auth/Form'
-import { useSignupMutation } from '@services/api'
+import { useSignupMutation, useUseUserQuery } from '@services/api'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
@@ -11,17 +11,16 @@ type Data = {
 }
 
 const Signup: NextPage = () => {
+  const { data: user } = useUseUserQuery()
   const [signup, result] = useSignupMutation()
   const router = useRouter()
-
+  if (user?.id) {
+    router.push('/auth/company')
+  }
   const handleSubmit = (data: Data) => {
     signup({
       ...data,
     })
-
-    if (result.isSuccess) {
-      router.push('/auth/company')
-    }
   }
 
   return (
