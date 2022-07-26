@@ -1,8 +1,6 @@
 import { Button, Checkbox, Input, Stack, Text } from '@chakra-ui/react'
 import AuthContainer from '@components/auth/Container'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import type { SubmitHandler } from 'react-hook-form'
 import { useForm } from 'react-hook-form'
 
 import { useCreateCompanyMutation, useUseUserQuery } from '../../services/api'
@@ -11,26 +9,30 @@ type TCompany = {
   name: string
   region: string
   currency: string
+  terms: boolean
 }
 
 const UserPage = () => {
-  const [createCompany, result] = useCreateCompanyMutation()
+  const [createCompany] = useCreateCompanyMutation()
   const { data: user } = useUseUserQuery()
   const router = useRouter()
-
   const { register, handleSubmit } = useForm<TCompany>()
 
   const onSubmit = (data: TCompany) => {
-    createCompany({ ...data })
+    if (data.terms) {
+      createCompany({ ...data })
+    } else {
+      alert('You must accept the terms and conditions')
+    }
   }
 
-  useEffect(() => {
-    if (user?.company) {
-      router.push('/menu')
-    }
-  }, [user?.company])
+  if (user && user.company) {
+    router.push('/app/menu')
+  }
 
-  return (
+  return !user ? (
+    'Loading...'
+  ) : (
     <AuthContainer type="company">
       <form className="w-[90%]" onSubmit={handleSubmit(onSubmit)}>
         <Stack className="mt-5" spacing={7}>
@@ -53,8 +55,7 @@ const UserPage = () => {
               type="text"
               {...register('currency')}
             />
-
-            <Checkbox size="lg">
+            <Checkbox size="lg" {...register('terms')}>
               <Text className="text-zinc-500">
                 I agree to the terms and conditions
               </Text>

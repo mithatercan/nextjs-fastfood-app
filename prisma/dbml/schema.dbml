@@ -10,8 +10,8 @@ Table User {
 }
 
 Table Company {
-  name String [not null]
   id Int [pk, increment]
+  name String [not null]
   region String
   currency String
   categories Category

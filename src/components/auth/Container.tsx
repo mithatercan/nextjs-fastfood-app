@@ -10,7 +10,7 @@ const Container = ({
   children,
 }: {
   type: 'signin' | 'signup' | 'company'
-  children: JSX.Element
+  children: JSX.Element | JSX.Element[]
 }) => {
   return (
     <Box className="w-screen h-screen flex bg-cover bg-center bg-auth-bg">
