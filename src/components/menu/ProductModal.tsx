@@ -12,7 +12,7 @@ import {
   Select,
   Stack,
 } from '@chakra-ui/react'
-import { useGetAllCategiresQuery } from '@services/api'
+import { useGetAllCategoriesQuery } from '@services/api'
 
 const CategoryModal = ({
   isOpen,
@@ -21,16 +21,13 @@ const CategoryModal = ({
   isOpen: boolean
   onClose: () => void
 }): JSX.Element => {
-  const { data: categories } = useGetAllCategiresQuery()
+  const { data: categories } = useGetAllCategoriesQuery()
   const flattencategories =
     categories &&
     categories.map((c) =>
       // @ts-ignore
       c.categories.map((x) => x).map((x: { name: string }) => x.name)
     )[0]
-  // @ts-ignore
-  // console.log(flatten(categories).map((category) => flatten(category)))
-  // console.log(unnest(categories))
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>

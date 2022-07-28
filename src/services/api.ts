@@ -60,10 +60,51 @@ export const api = createApi({
       }),
       invalidatesTags: ['user'],
     }),
-    getAllCategires: builder.query<Category[], void>({
+    getAllCategories: builder.query<Category[], void>({
       query: () => ({
         url: 'api/category/getAllCategories',
         method: 'GET',
+      }),
+    }),
+    createCategory: builder.mutation({
+      query: (category) => ({
+        url: 'api/category/createCategory',
+        method: 'POST',
+        body: category,
+      }),
+    }),
+    getAllProducts: builder.query({
+      query: () => ({
+        url: 'api/product/getAllProducts',
+        method: 'GET',
+      }),
+    }),
+    removeCategory: builder.mutation({
+      query: (id) => ({
+        url: 'api/category/removeCategory',
+        method: 'POST',
+        body: id,
+      }),
+    }),
+    createProduct: builder.mutation({
+      query: (data) => ({
+        url: 'api/product/createProduct',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        url: 'api/product/deleteProduct',
+        method: 'POST',
+        body: id,
+      }),
+    }),
+    editProduct: builder.mutation({
+      query: (data) => ({
+        url: 'api/product/editProduct',
+        method: 'POST',
+        body: data,
       }),
     }),
   }),
@@ -75,5 +116,11 @@ export const {
   useSignupMutation,
   useLogOutMutation,
   useCreateCompanyMutation,
-  useGetAllCategiresQuery,
+  useGetAllCategoriesQuery,
+  useCreateCategoryMutation,
+  useCreateProductMutation,
+  useDeleteProductMutation,
+  useEditProductMutation,
+  useGetAllProductsQuery,
+  useRemoveCategoryMutation,
 } = api
