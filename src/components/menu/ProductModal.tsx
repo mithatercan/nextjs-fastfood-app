@@ -12,22 +12,12 @@ import {
   Select,
   Stack,
 } from '@chakra-ui/react'
-import { useGetAllCategoriesQuery } from '@services/api'
-// const [createCompany] = useCreateCompanyMutation()
-// const { data: user } = useUseUserQuery()
-// const router = useRouter()
-// if (user?.company) {
-//   router.push('/menu')
-// }
-// const { register, handleSubmit } = useForm<TCompany>()
-//
-// const onSubmit = (data: TCompany) => {
-//   if (data.terms) {
-//     createCompany({ ...data })
-//   } else {
-//     alert('You must accept the terms and conditions')
-//   }
-// }
+import type { Product } from '@prisma/client'
+import {
+  useCreateProductMutation,
+  useGetAllCategoriesQuery,
+} from '@services/api'
+import { useForm } from 'react-hook-form'
 
 const CategoryModal = ({
   isOpen,
@@ -37,12 +27,21 @@ const CategoryModal = ({
   onClose: () => void
 }): JSX.Element => {
   const { data: categories } = useGetAllCategoriesQuery()
+  // TODO make it clearer
   const flattencategories =
     categories &&
     categories.map((c) =>
       // @ts-ignore
       c.categories.map((x) => x).map((x: { name: string }) => x.name)
     )[0]
+  const [createProduct] = useCreateProductMutation()
+  const { register, handleSubmit } = useForm<Product>()
+  const onSubmit = (data: Product) => {
+    console.log(data)
+    const { price } = data
+    console.log(typeof price)
+    createProduct({ ...data })
+  }
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -51,10 +50,14 @@ const CategoryModal = ({
           <ModalHeader>New Product</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Stack spacing={3}>
-                <Input placeholder="Product name" />
-                <Input placeholder="Product's price" type="number" />
+                <Input {...register('name')} placeholder="Product name" />
+                <Input
+                  {...register('price')}
+                  placeholder="Product's price"
+                  type="number"
+                />
                 <Select placeholder="Choose category">
                   {categories &&
                     flattencategories?.map((category: string) => {
@@ -66,16 +69,21 @@ const CategoryModal = ({
                     })}
                   )
                 </Select>
-                <Input placeholder="Product's description" />
+                <Input
+                  {...register('description')}
+                  placeholder="Product's description"
+                />
               </Stack>
+              <ModalFooter>
+                <Button colorScheme="gray" mr={3} onClick={onClose}>
+                  Close
+                </Button>
+                <Button type="submit" colorScheme="blue">
+                  Save
+                </Button>
+              </ModalFooter>
             </form>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="gray" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
