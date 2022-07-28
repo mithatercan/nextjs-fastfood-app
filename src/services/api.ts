@@ -1,4 +1,4 @@
-import type { Company } from '@prisma/client'
+import type { Category, Company } from '@prisma/client'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export type LoginRequest = {
@@ -60,6 +60,12 @@ export const api = createApi({
       }),
       invalidatesTags: ['user'],
     }),
+    getAllCategires: builder.query<Category[], void>({
+      query: () => ({
+        url: 'api/category/getAllCategories',
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
@@ -69,4 +75,5 @@ export const {
   useSignupMutation,
   useLogOutMutation,
   useCreateCompanyMutation,
+  useGetAllCategiresQuery,
 } = api

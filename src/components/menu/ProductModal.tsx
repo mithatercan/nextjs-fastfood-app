@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   Button,
   Input,
@@ -11,6 +12,7 @@ import {
   Select,
   Stack,
 } from '@chakra-ui/react'
+import { useGetAllCategiresQuery } from '@services/api'
 
 const CategoryModal = ({
   isOpen,
@@ -19,6 +21,16 @@ const CategoryModal = ({
   isOpen: boolean
   onClose: () => void
 }): JSX.Element => {
+  const { data: categories } = useGetAllCategiresQuery()
+  const flattencategories =
+    categories &&
+    categories.map((c) =>
+      // @ts-ignore
+      c.categories.map((x) => x).map((x: { name: string }) => x.name)
+    )[0]
+  // @ts-ignore
+  // console.log(flatten(categories).map((category) => flatten(category)))
+  // console.log(unnest(categories))
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -31,7 +43,17 @@ const CategoryModal = ({
               <Stack spacing={3}>
                 <Input placeholder="Product name" />
                 <Input placeholder="Product's price" type="number" />
-                <Select placeholder="Choose category" />
+                <Select placeholder="Choose category">
+                  {categories &&
+                    flattencategories?.map((category: string) => {
+                      return (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      )
+                    })}
+                  )
+                </Select>
                 <Input placeholder="Product's description" />
               </Stack>
             </form>
