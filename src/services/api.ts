@@ -66,9 +66,9 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
-    createCategory: builder.mutation({
+    createCategory: builder.mutation<Company, Category>({
       query: (category) => ({
-        url: 'api/category/createCategory',
+        url: 'api/category/addCategory',
         method: 'POST',
         body: category,
       }),

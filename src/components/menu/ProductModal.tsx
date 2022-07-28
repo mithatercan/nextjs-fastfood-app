@@ -13,6 +13,21 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import { useGetAllCategoriesQuery } from '@services/api'
+// const [createCompany] = useCreateCompanyMutation()
+// const { data: user } = useUseUserQuery()
+// const router = useRouter()
+// if (user?.company) {
+//   router.push('/menu')
+// }
+// const { register, handleSubmit } = useForm<TCompany>()
+//
+// const onSubmit = (data: TCompany) => {
+//   if (data.terms) {
+//     createCompany({ ...data })
+//   } else {
+//     alert('You must accept the terms and conditions')
+//   }
+// }
 
 const CategoryModal = ({
   isOpen,
@@ -45,7 +60,7 @@ const CategoryModal = ({
                     flattencategories?.map((category: string) => {
                       return (
                         <option key={category} value={category}>
-                          {category}
+                          <label>{category}</label>
                         </option>
                       )
                     })}
