@@ -14,9 +14,10 @@ Table Company {
   name String [not null]
   region String
   currency String
-  categories Category
+  categories Category [not null]
   user User [not null]
   userId Int [unique, not null]
+  Product Product [not null]
 }
 
 Table Category {
@@ -24,8 +25,7 @@ Table Category {
   description String
   name String [not null]
   products Product [not null]
-  Company Company
-  companyId Int [unique]
+  company Company [not null]
 }
 
 Table Product {
@@ -34,6 +34,8 @@ Table Product {
   name String [not null]
   description String [not null]
   ingredients String[] [not null]
+  company Company [not null]
+  companyId Int [not null]
   category Category [not null]
   categoryId Int [not null]
   menu Menu
@@ -49,6 +51,11 @@ Table Menu {
   size Size [not null, default: 'Medium']
 }
 
+Table CategoryToCompany {
+  categoriesId Int [ref: > Category.id]
+  companyId Int [ref: > Company.id]
+}
+
 Enum Size {
   Big
   Medium
@@ -57,7 +64,7 @@ Enum Size {
 
 Ref: Company.userId - User.id
 
-Ref: Category.companyId - Company.id
+Ref: Product.companyId > Company.id
 
 Ref: Product.categoryId > Category.id
 

@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react'
 
 const Footer = () => {
   return (
@@ -7,7 +7,7 @@ const Footer = () => {
         @Copyright FoodApp 2022
       </Text>
     </Box>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

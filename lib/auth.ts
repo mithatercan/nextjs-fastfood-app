@@ -30,9 +30,6 @@ export const validateRoute = (
         res.json({ e })
         return
       }
-      //! -----------------------------------------------------------------------0
-      //! if valid return taken function
-      //! if its not response with error and not authorized
       return handler(req, res, user)
     }
     res.status(401)

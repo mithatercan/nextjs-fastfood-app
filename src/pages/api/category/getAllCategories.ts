@@ -11,24 +11,17 @@ export default validateRoute(
         userId: user.id,
       },
     })
-    const { name, description }: { name: string; description: string | null } =
-      req.body
     try {
-      const updatedCompany = await prisma.company.update({
+      const categories = await prisma.company.findMany({
+        select: {
+          categories: true,
+        },
         where: {
           id: company?.id,
         },
-        data: {
-          categories: {
-            create: {
-              name,
-              description,
-            },
-          },
-        },
       })
 
-      res.status(201).json({ updatedCompany })
+      res.status(201).json(categories)
     } catch (e) {
       res.status(401).json({ error: 'error while trying to create company' })
     }

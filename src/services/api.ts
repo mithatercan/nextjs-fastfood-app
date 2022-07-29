@@ -1,4 +1,4 @@
-import type { Company } from '@prisma/client'
+import type { Category, Company } from '@prisma/client'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export type LoginRequest = {
@@ -60,6 +60,53 @@ export const api = createApi({
       }),
       invalidatesTags: ['user'],
     }),
+    getAllCategories: builder.query<Category[], void>({
+      query: () => ({
+        url: 'api/category/getAllCategories',
+        method: 'GET',
+      }),
+    }),
+    createCategory: builder.mutation<Company, Category>({
+      query: (category) => ({
+        url: 'api/category/addCategory',
+        method: 'POST',
+        body: category,
+      }),
+    }),
+    getAllProducts: builder.query({
+      query: () => ({
+        url: 'api/product/getAllProducts',
+        method: 'GET',
+      }),
+    }),
+    removeCategory: builder.mutation({
+      query: (id) => ({
+        url: 'api/category/removeCategory',
+        method: 'POST',
+        body: id,
+      }),
+    }),
+    createProduct: builder.mutation({
+      query: (data) => ({
+        url: 'api/products/addProduct',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        url: 'api/product/deleteProduct',
+        method: 'POST',
+        body: id,
+      }),
+    }),
+    editProduct: builder.mutation({
+      query: (data) => ({
+        url: 'api/product/editProduct',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 })
 
@@ -69,4 +116,11 @@ export const {
   useSignupMutation,
   useLogOutMutation,
   useCreateCompanyMutation,
+  useGetAllCategoriesQuery,
+  useCreateCategoryMutation,
+  useCreateProductMutation,
+  useDeleteProductMutation,
+  useEditProductMutation,
+  useGetAllProductsQuery,
+  useRemoveCategoryMutation,
 } = api

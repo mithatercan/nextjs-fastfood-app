@@ -10,6 +10,9 @@ import {
   ModalOverlay,
   Stack,
 } from '@chakra-ui/react'
+import type { Category } from '@prisma/client'
+import { useCreateCategoryMutation } from '@services/api'
+import { useForm } from 'react-hook-form'
 
 const CategoryModal = ({
   isOpen,
@@ -18,6 +21,13 @@ const CategoryModal = ({
   isOpen: boolean
   onClose: () => void
 }): JSX.Element => {
+  const [createCategory] = useCreateCategoryMutation()
+  const { register, handleSubmit } = useForm<Category>()
+
+  const onSubmit = (data: Category) => {
+    createCategory({ ...data })
+  }
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -25,20 +35,28 @@ const CategoryModal = ({
         <ModalContent>
           <ModalHeader>New Category</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ModalBody>
               <Stack spacing={3}>
-                <Input placeholder="Category name" />
-                <Input placeholder="Category's description" />
+                <Input
+                  {...register('description')}
+                  placeholder="Category name"
+                />
+                <Input
+                  {...register('name')}
+                  placeholder="Category's description"
+                />
               </Stack>
-            </form>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="gray" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </ModalFooter>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="gray" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button type="submit" colorScheme="blue">
+                Save
+              </Button>
+            </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
     </>
